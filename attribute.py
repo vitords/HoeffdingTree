@@ -19,6 +19,7 @@ class Attribute(object):
 		ValueError: If att_type is not 'Numeric' or 'Nominal'.
 
 	"""
+	
 	# TODO: Make constructor identify the attribute type by using the args received.
 	def __init__(self, name, values=None, att_type=None, index=-1):
 		# The name of the attribute
@@ -65,7 +66,6 @@ class Attribute(object):
 			return self.__values.index(value)
 		else:
 			return -1
-
 
 	def name(self):
 		"""Return the name of the attribute.

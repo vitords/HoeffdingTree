@@ -167,11 +167,8 @@ class Instance(object):
 
 		Returns:
 			list[Attribute]: A list containing all the attributes of the instance.
-
 		"""
 		attributes = [None for i in range(self.num_attributes())]
 		for i in range(self.num_attributes()):
 			attributes[i] = self.attribute(i)
 		return attributes
-
-	
