@@ -123,12 +123,10 @@ class HoeffdingTree(object):
 		# ActiveHNode should be changed to a LearningNode interface if Naive Bayes nodes are used
 		if isinstance(actual_node, ActiveHNode):
 			actual_node.update_node(instance)
-
-			if isinstance(actual_node, ActiveHNode):
-				total_weight = actual_node.total_weight()
-				if total_weight - actual_node.weight_seen_at_last_split_eval > self.__grace_period:
-					self.try_split(actual_node, l.parent_node, l.parent_branch)
-					actual_node.weight_seen_at_last_split_eval = total_weight
+			total_weight = actual_node.total_weight()
+			if total_weight - actual_node.weight_seen_at_last_split_eval > self.__grace_period:
+				self.try_split(actual_node, l.parent_node, l.parent_branch)
+				actual_node.weight_seen_at_last_split_eval = total_weight
 
 	def distribution_for_instance(self, instance):
 		"""Return the class probabilities for an instance.

@@ -6,4 +6,4 @@ class InactiveHNode(LeafNode):
 		self.class_distribution = class_distribution
 
 	def update_node(self, instance):
-		super.update_distribution(instance)
+		self.update_distribution(instance)

@@ -12,7 +12,4 @@ class LeafNode(HNode):
 		if self.the_node is not None:
 			self.the_node.update_distribution(instance)
 		else:
-			super.update_distribution(instance)
-
-	#def update_distribution(self, instance):
-	#	super.update_distribution(instance)
+			self.update_distribution(instance)
