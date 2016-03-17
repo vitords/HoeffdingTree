@@ -1,4 +1,4 @@
-from instance import *
+from core.instance import Instance
 
 class Dataset(object):
 	"""A class for handling a dataset (set of instances).

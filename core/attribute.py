@@ -67,6 +67,14 @@ class Attribute(object):
 		else:
 			return -1
 
+	def is_numeric(self):
+		"""Test if attribute is Numeric.
+
+		Returns:
+			bool: True if the attribute is Numeric, False otherwise.
+		"""
+		return self.__att_type is 'Numeric'
+
 	def name(self):
 		"""Return the name of the attribute.
 

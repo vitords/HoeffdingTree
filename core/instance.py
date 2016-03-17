@@ -1,4 +1,5 @@
-from attribute import *
+from core.attribute import Attribute
+import math
 
 class Instance(object):
 	"""A class for handling an instance. 
@@ -27,6 +28,7 @@ class Instance(object):
 		self.__att_values = att_values
 		# The dataset with which this instance is associated (has access to its properties and/or attributes).
 		self.__dataset = None
+		self.__weight = 1
 
 	def __str__(self):
 		return 'Instance\n   From dataset: {0}\n   Attribute values: {1}\n   Class: {2}'.format(
@@ -62,6 +64,19 @@ class Instance(object):
 		#TODO: Should check if the instance is associated to a dataset.
 		return self.__dataset.class_index()
 
+	def class_is_missing(self):
+		"""Test if the instance is missing a class.
+
+		Returns:
+			bool: True if the instance's class is missing, False otherwise.
+
+		Raises:
+			ValueError: If class is not set for the instance.
+		"""
+		if self.class_index() < 0:
+			raise ValueError("Class is not set.")
+		return self.is_missing(self.class_index())
+
 	def class_value(self):
 		"""Return the class value of the instance. 
 		If class attribute is Nominal, return the index of its value in the attribute's definition.
@@ -83,6 +98,20 @@ class Instance(object):
 			Dataset: The dataset this instance is associated with.
 		"""
 		return self.__dataset
+
+	def is_missing(self, att_index):
+		"""Test if a value is missing.
+
+		Args:
+			att_index (int):
+
+		Returns:
+			bool: True if value is missing, False otherwise.
+		"""
+		if math.isnan(self.__att_values[att_index]):
+			return True
+		else:
+			return False 
 
 	def num_attributes(self):
 		"""Return the number of attributes of the instance.
@@ -147,6 +176,32 @@ class Instance(object):
 			value_index = att_index
 		self.__att_values[value_index] = value
 
+	def set_weight(self, weight):
+		"""Set the weight of the instance.
+
+		Args:
+			weight (float): The weight.
+		"""
+		self.__weight = weight
+
+	def string_value(self, att_index=None, attribute=None):
+		"""Return the value of the attribute as a string.
+
+		Args:
+			att_index (int): The index of the attribute. (default None)
+			attribute (Attribute): The attribute for which the value is to be returned. (default None)
+
+		Returns:
+			str: The value of the attribute as a string.
+		"""
+		if attribute is None:
+			attribute = self.__dataset.attribute(att_index)
+		if att_index is None:
+			att_index = attribute.index()
+		if self.is_missing(att_index):
+			return '?'
+		return attribute.value(self.value(index=att_index))
+
 	def value(self, index=None, attribute=None):
 		"""Return the value of an intance's attribute.
 
@@ -161,6 +216,14 @@ class Instance(object):
 			return self.__att_values[index]
 		else:
 			return self.__att_values[attribute.index()]	
+
+	def weight(self):
+		"""Return the weight of the instance.
+
+		Returns:
+			float: The weight of the instance.
+		"""
+		return self.__weight
 
 	def get_attributes(self):
 		"""Return all attributes of the instance.
