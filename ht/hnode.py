@@ -111,7 +111,7 @@ class HNode(metaclass=ABCMeta):
 
 	def leaf_for_instance(self, instance, parent, parent_branch):
 		from ht.leafnode import LeafNode
-		return LeafNode(self, parent, parent_branch)
+		return LeafNode(node=self, parent_node=parent, parent_branch=parent_branch)
 
 	@abstractmethod
 	def update_node(self, instance):

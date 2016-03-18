@@ -32,17 +32,17 @@ class HoeffdingTree(object):
 
 		#self.__selected_split_metric = self.INFO_GAIN_SPLIT
 		#self.__split_metric = InfoGainSplitMetric(self.__min_frac_weight_for_two_branches_gain)
-
 		self.__selected_split_metric = self.GINI_SPLIT
 		self.__split_metric = GiniSplitMetric()
+
 		# Leaf prediction strategy stuff goes here
 
 		# Only related to naive bayes, probably not useful right now
 		self.__nb_threshold = 0
 
-		self.__active_leaf_count = None
-		self.__inactive_leaf_count = None
-		self.__decision_node_count = None
+		self.__active_leaf_count = 0
+		self.__inactive_leaf_count = 0
+		self.__decision_node_count = 0
 
 		# Print out leaf models in the case of naive Bayes or naive Bayes adaptive leaves 
 		self.__print_leaf_models = False
@@ -83,13 +83,13 @@ class HoeffdingTree(object):
 		return self.__split_confidence
 
 	def compute_hoeffding_bound(self, max_value, confidence, weight):
-		return math.sqrt(((max_value * max_value) * math.log(1.0 / confidence)) / (2.0 / weight))
+		return math.sqrt(((max_value * max_value) * math.log(1.0 / confidence)) / (2.0 * weight))
 
 	def build_classifier(self, dataset):
-		"""Builds the classifier.
+		"""Build the classifier.
 
 		Args:
-			dataset (Dataset):
+			dataset (Dataset): The data to start training the classifier.
 		"""
 		self.reset()
 		self.__header = dataset
@@ -105,8 +105,7 @@ class HoeffdingTree(object):
 		"""Update the classifier with the given instance.
 
 		Args:
-			instance (Instance):
-
+			instance (Instance): The new instance to be used to train the classifier.
 		"""
 		if instance.class_is_missing():
 			return
@@ -120,7 +119,10 @@ class HoeffdingTree(object):
 			actual_node = ActiveHNode()
 			l.parent_node.set_child(l.parent_branch, actual_node)
 
+		
 		# ActiveHNode should be changed to a LearningNode interface if Naive Bayes nodes are used
+		if isinstance(actual_node, InactiveHNode):
+			actual_node.update_node(instance)
 		if isinstance(actual_node, ActiveHNode):
 			actual_node.update_node(instance)
 			total_weight = actual_node.total_weight()
@@ -132,10 +134,10 @@ class HoeffdingTree(object):
 		"""Return the class probabilities for an instance.
 
 		Args:
-			instance (Instance): The instance to calculate the class probabilites for
+			instance (Instance): The instance to calculate the class probabilites for.
 
 		Returns:
-			list[float]: The class probabilities
+			list[float]: The class probabilities.
 		"""
 		class_attribute = instance.class_attribute()
 		pred = [0 for i in range(class_attribute.num_values())]
@@ -159,6 +161,13 @@ class HoeffdingTree(object):
 
 
 	def deactivate_node(self, to_deactivate, parent, parent_branch):
+		"""Prevent supplied node of growing.
+
+		Args:
+			to_deactivate (ActiveHNode): The node to be deactivated.
+			parent (SplitNode): The parent of the node.
+			parent_branch (str): The branch leading from the parent to the node.
+		"""
 		leaf = InactiveHNode(to_deactivate.class_distribution)
 
 		if parent is None:
@@ -170,6 +179,13 @@ class HoeffdingTree(object):
 		self.__inactive_leaf_count += 1
 
 	def activate_node(self, to_activate, parent, parent_branch):
+		"""Allow supplied node to grow.
+
+		Args:
+			to_activate (InactiveHNode): The node to be activated.
+			parent (SplitNode): The parent of the node.
+			parent_branch (str): The branch leading from the parent to the node.
+		"""
 		leaf = ActiveHNode()
 		leaf.class_distribution = to_activate.class_distribution
 
@@ -182,12 +198,20 @@ class HoeffdingTree(object):
 		self.__inactive_leaf_count -= 1
 
 	def try_split(self, node, parent, parent_branch):
+		"""Try a split from the supplied node.
+
+		Args:
+			node (ActiveHNode): The node to split.
+			parent (SplitNode): The parent of the node.
+			parent_branch (str): The branch leading from the parent to the node.
+		"""
 		# Non-pure?
 		if node.num_entries_in_class_distribution() > 1:
 			best_splits = node.get_possible_splits(self.__split_metric)
 			best_splits.sort(key=attrgetter('split_merit'))
 
 			do_split = False
+			print(len(best_splits))
 			if len(best_splits) < 2:
 				do_split = len(best_splits) > 0
 			else:
@@ -197,12 +221,11 @@ class HoeffdingTree(object):
 					metric_max, self.__split_confidence, node.total_weight())
 				best = best_splits[len(best_splits) - 1]
 				second_best = best_splits[len(best_splits) - 2]
-
 				if best.split_merit - second_best.split_merit > hoeffding_bound or hoeffding_bound < self.__hoeffding_tie_threshold:
 					do_split = True
 
 		if do_split:
-			best = best_splits.get(len(best_splits) - 1)
+			best = best_splits[len(best_splits) - 1]
 			if best.split_test is None:
 				# preprune
 				self.deactivate_node(node, parent, parent_branch)

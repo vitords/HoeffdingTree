@@ -5,7 +5,7 @@ class SplitNode(HNode):
 	"""
 	"""
 	def __init__(self, class_distrib, split):
-		super(class_distrib)
+		super().__init__(class_distrib)
 		self.split = split
 		# Dict of tuples (branch, child)
 		self.children = {}
