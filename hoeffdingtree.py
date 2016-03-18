@@ -211,7 +211,6 @@ class HoeffdingTree(object):
 			best_splits.sort(key=attrgetter('split_merit'))
 
 			do_split = False
-			print(len(best_splits))
 			if len(best_splits) < 2:
 				do_split = len(best_splits) > 0
 			else:
@@ -234,16 +233,16 @@ class HoeffdingTree(object):
 
 				for i in range(best.num_splits()):
 					new_child = self.new_learning_node()
-					new_child.class_distribution = best.post_split_class_distributions.get(i)
+					new_child.class_distribution = best.post_split_class_distributions[i]
 					new_child.weight_seen_at_last_split_eval = new_child.total_weight()
 					branch_name = ''
-					if self.__header.attribute(best.split_test.split_attributes().get(0)).is_numeric():
+					if self.__header.attribute(name=best.split_test.split_attributes()[0]).is_numeric():
 						if i is 0:
 							branch_name = 'left'
 						else:
 							branch_name = 'right'
 					else:
-						split_attribute = self.__header.attribute(best.split_test.split_attributes().get(0))
+						split_attribute = self.__header.attribute(name=best.split_test.split_attributes()[0])
 						branch_name = split_attribute.value(i)
 					new_split.set_child(branch_name, new_child)
 

@@ -10,7 +10,7 @@ class SplitNode(HNode):
 		# Dict of tuples (branch, child)
 		self.children = {}
 
-	def branch_for_instance(instance):
+	def branch_for_instance(self, instance):
 		return self.split.branch_for_instance(instance)
 
 	def is_leaf(self):
@@ -49,7 +49,7 @@ class SplitNode(HNode):
 		return leaf_count
 
 	def install_node_nums(self, node_num):
-		node_num = super.install_node_nums(node_num)
+		node_num = super().install_node_nums(node_num)
 
 		for branch, child in self.children.items():
 			if child is not None:

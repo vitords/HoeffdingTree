@@ -4,6 +4,7 @@ class LeafNode(HNode):
 	"""
 	"""
 	def __init__(self, node=None, parent_node=None, parent_branch=None):
+		super().__init__()
 		self.the_node = node
 		self.parent_node = parent_node
 		self.parent_branch = parent_branch

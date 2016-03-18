@@ -103,7 +103,7 @@ class Instance(object):
 		"""Test if a value is missing.
 
 		Args:
-			att_index (int):
+			att_index (int): The index of the attribute to be tested.
 
 		Returns:
 			bool: True if value is missing, False otherwise.

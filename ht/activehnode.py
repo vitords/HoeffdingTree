@@ -7,7 +7,7 @@ from ht.splitcandidate import SplitCandidate
 class ActiveHNode(LeafNode):
 	"""docstring for ActiveHNode"""
 	def __init__(self):
-		HNode.__init__(self)
+		super().__init__()
 		self.weight_seen_at_last_split_eval = 0
 		# Dict of tuples (attribute name, ConditionalSufficientStats)
 		self._node_stats = {}
