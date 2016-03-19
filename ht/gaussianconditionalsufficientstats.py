@@ -1,12 +1,13 @@
 from ht.conditionalsufficientstats import ConditionalSufficientStats
 from univariatenormalestimator import UnivariateNormalEstimator
 from sortedcontainers import SortedList
+from core import utils
 import math
 
 class GaussianEstimator(UnivariateNormalEstimator):
 	"""docstring for GaussianEstimator"""
 	def __init__(self):
-		pass
+		super().__init__()
 
 	def get_sum_of_weights(self):
 		return self._sum_of_weights
@@ -17,7 +18,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
 			std_dev = math.sqrt(self._variance)
 			if std_dev > 0:
 				diff = value - self._mean
-				return (1.0 / (CONST * std_dev)) * math.exp(-(diff * diff / (2.0 * self._variance)))
+				return (1.0 / self.CONST * std_dev)) * math.exp(-(diff * diff / (2.0 * self._variance)))
 			if value is self._mean:
 				return 1.0
 			else:
@@ -41,9 +42,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
 class GaussianConditionalSufficientStats(ConditionalSufficientStats):
 	"""docstring for GaussianConditionalSufficientStats"""
 	def __init__(self):
-		# Tuples (class value, attribute estimator)
-		self._class_lookup = {}
-		
+		super().__init__()
 		self._min_val_observed_per_class = {}
 		self._max_val_observed_per_class = {}
 		self._num_bins = 10
@@ -55,9 +54,7 @@ class GaussianConditionalSufficientStats(ConditionalSufficientStats):
 		return self._num_bins
 
 	def update(self, att_val, class_val, weight):
-		# Could probably eliminate this test since missing values won't be allowed
 		if not utils.is_missing_value(att_val):
-			# norm needs to be a GaussianEstimator
 			norm = self._class_lookup.get(class_val, None)
 			if norm is None:
 				return 0

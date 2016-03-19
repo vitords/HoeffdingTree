@@ -39,8 +39,7 @@ class ValueDistribution(object):
 class NominalConditionalSufficientStats(ConditionalSufficientStats):
 	"""docstring for NominalConditionalSufficientStats"""
 	def __init__(self):
-		# Tuples (class value, attribute estimator)
-		self._class_lookup = {}
+		super().__init__()
 		self._total_weight = 0
 		self._missing_weight = 0
 

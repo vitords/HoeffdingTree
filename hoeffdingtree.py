@@ -30,10 +30,10 @@ class HoeffdingTree(object):
 		self.GINI_SPLIT = 0
 		self.INFO_GAIN_SPLIT = 1
 
-		#self.__selected_split_metric = self.INFO_GAIN_SPLIT
-		#self.__split_metric = InfoGainSplitMetric(self.__min_frac_weight_for_two_branches_gain)
-		self.__selected_split_metric = self.GINI_SPLIT
-		self.__split_metric = GiniSplitMetric()
+		self.__selected_split_metric = self.INFO_GAIN_SPLIT
+		self.__split_metric = InfoGainSplitMetric(self.__min_frac_weight_for_two_branches_gain)
+		#self.__selected_split_metric = self.GINI_SPLIT
+		#self.__split_metric = GiniSplitMetric()
 
 		# Leaf prediction strategy stuff goes here
 
@@ -223,37 +223,37 @@ class HoeffdingTree(object):
 				if best.split_merit - second_best.split_merit > hoeffding_bound or hoeffding_bound < self.__hoeffding_tie_threshold:
 					do_split = True
 
-		if do_split:
-			best = best_splits[len(best_splits) - 1]
-			if best.split_test is None:
-				# preprune
-				self.deactivate_node(node, parent, parent_branch)
-			else:
-				new_split = SplitNode(node.class_distribution, best.split_test)
-
-				for i in range(best.num_splits()):
-					new_child = self.new_learning_node()
-					new_child.class_distribution = best.post_split_class_distributions[i]
-					new_child.weight_seen_at_last_split_eval = new_child.total_weight()
-					branch_name = ''
-					if self.__header.attribute(name=best.split_test.split_attributes()[0]).is_numeric():
-						if i is 0:
-							branch_name = 'left'
-						else:
-							branch_name = 'right'
-					else:
-						split_attribute = self.__header.attribute(name=best.split_test.split_attributes()[0])
-						branch_name = split_attribute.value(i)
-					new_split.set_child(branch_name, new_child)
-
-				self.__active_leaf_count -= 1
-				self.__decision_node_count += 1
-				self.__active_leaf_count += best.num_splits()
-
-				if parent is None:
-					self.__root = new_split
+			if do_split:
+				best = best_splits[len(best_splits) - 1]
+				if best.split_test is None:
+					# preprune
+					self.deactivate_node(node, parent, parent_branch)
 				else:
-					parent.set_child(parent_branch, new_split)
+					new_split = SplitNode(node.class_distribution, best.split_test)
+
+					for i in range(best.num_splits()):
+						new_child = self.new_learning_node()
+						new_child.class_distribution = best.post_split_class_distributions[i]
+						new_child.weight_seen_at_last_split_eval = new_child.total_weight()
+						branch_name = ''
+						if self.__header.attribute(name=best.split_test.split_attributes()[0]).is_numeric():
+							if i is 0:
+								branch_name = 'left'
+							else:
+								branch_name = 'right'
+						else:
+							split_attribute = self.__header.attribute(name=best.split_test.split_attributes()[0])
+							branch_name = split_attribute.value(i)
+						new_split.set_child(branch_name, new_child)
+
+					self.__active_leaf_count -= 1
+					self.__decision_node_count += 1
+					self.__active_leaf_count += best.num_splits()
+
+					if parent is None:
+						self.__root = new_split
+					else:
+						parent.set_child(parent_branch, new_split)
 
 	def new_learning_node(self):
 		# Leaf strategy should be handled here if/when the Naive Bayes approach is implemented
