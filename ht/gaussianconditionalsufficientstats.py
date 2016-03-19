@@ -18,7 +18,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
 			std_dev = math.sqrt(self._variance)
 			if std_dev > 0:
 				diff = value - self._mean
-				return (1.0 / self.CONST * std_dev)) * math.exp(-(diff * diff / (2.0 * self._variance)))
+				return (1.0 / (self.CONST * std_dev)) * math.exp(-(diff * diff / (2.0 * self._variance)))
 			if value is self._mean:
 				return 1.0
 			else:
