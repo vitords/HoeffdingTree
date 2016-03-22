@@ -13,7 +13,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
 		return self._sum_of_weights
 
 	def probability_density(self, value):
-		self._update_mean_and_variance()
+		self.update_mean_and_variance()
 		if self._sum_of_weights > 0:
 			std_dev = math.sqrt(self._variance)
 			if std_dev > 0:
@@ -25,7 +25,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
 				return 0.0
 		return 0.0
 
-	def weight_less_than_equal_and_greater_than(value):
+	def weight_less_than_equal_and_greater_than(self, value):
 		std_dev = math.sqrt(self._variance)
 		equal_w = self.probability_density(value) * self._sum_of_weights
 		less_w = None

@@ -68,9 +68,7 @@ class NominalConditionalSufficientStats(ConditionalSufficientStats):
 	def _class_dists_after_split(self):
 		split_dists = {}
 		for class_val, att_dist in self._class_lookup.items():
-			#print('Class val: {0}, att dist: {1}'.format(class_val, att_dist))
 			for att_val, att_count in att_dist._dist.items():
-				#print('Att val: {0}, att count: {1}'.format(att_val, att_count))
 				cls_dist = split_dists.get(att_val, None)
 				if cls_dist is None:
 					cls_dist = {}
