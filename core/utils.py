@@ -25,7 +25,7 @@ def compare(f1, f2):
 def normal_probability(a):
     x = a * 7.07106781186547524401e-1
     y = 0.5
-    z = math.abs(x)
+    z = abs(x)
 
     if z < 7.07106781186547524401e-1:
         y += 0.5 * error_function(x)
@@ -48,7 +48,7 @@ def error_function(x):
     2.26290000613890934246E4,
     4.92673942608635921086E4]
 
-    if math.abs(x) > 1.0:
+    if abs(x) > 1.0:
         return 1.0 - error_function_complemented(x)
 
     z = x * x
