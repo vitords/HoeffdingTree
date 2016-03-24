@@ -2,9 +2,11 @@ from ht.conditionalsufficientstats import ConditionalSufficientStats
 from ht.weightmass import WeightMass
 from ht.univariatenumericbinarysplit import UnivariateNumericBinarySplit
 from ht.splitcandidate import SplitCandidate
-from univariatenormalestimator import UnivariateNormalEstimator
-from sortedcontainers import SortedList
+
+from core.univariatenormalestimator import UnivariateNormalEstimator
 from core import utils
+
+from sortedcontainers import SortedList
 import math
 
 class GaussianEstimator(UnivariateNormalEstimator):

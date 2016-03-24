@@ -1,7 +1,8 @@
 from abc import ABCMeta, abstractmethod
 
 class Split(metaclass=ABCMeta):
-    """docstring for Split"""
+    """Base for classes that handle splitting (UnivariateNominaMultiwaySplit 
+    and UnivariateNumericBinarySplit)."""
     def __init__(self):
         self._split_att_names = []
 

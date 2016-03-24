@@ -12,16 +12,6 @@ def normalize(floats, floats_sum=None):
     for i in range(len(floats)):
         floats[i] /= floats_sum
 
-def compare(f1, f2):
-    """Compare two float values.
-    """
-    if f1 < f2:
-        return -1
-    if f1 > f2:
-        return 1
-    # Values are equal
-    return 0
-
 def normal_probability(a):
     x = a * 7.07106781186547524401e-1
     y = 0.5
@@ -140,9 +130,6 @@ def p1evl(x, coef, N):
 
 def is_missing_value(val):
     return math.isnan(val)
-
-def log2(a):
-    return math.log(a) / math.log(2)
 
 def eq(a, b):
     # Small deviation allowed in comparisons

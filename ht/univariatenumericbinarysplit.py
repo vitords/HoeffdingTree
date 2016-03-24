@@ -1,8 +1,7 @@
 from ht.split import Split
-from core.instance import Instance
 
 class UnivariateNumericBinarySplit(Split):
-    """docstring for UnivariateNumericBinarySplit"""
+    """Binary split based on a numeric attribute."""
     def __init__(self, att_name, split_point):
         super().__init__()
         self._split_att_names.append(att_name)
@@ -11,7 +10,6 @@ class UnivariateNumericBinarySplit(Split):
     def branch_for_instance(self, instance):
         att = instance.dataset().attribute(name=self._split_att_names[0])
         if att is None or instance.is_missing(att.index()):
-            # TODO
             return None
         if instance.value(attribute=att) <= self._split_point:
             return 'left'

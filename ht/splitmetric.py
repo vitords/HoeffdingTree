@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 class SplitMetric(metaclass=ABCMeta):
-    """docstring for SplitMetric"""
+    """Base for Info Gain and Gini split metrics."""
     def sum(self, dist):
         weight_sum = 0
         for class_value, mass in dist.items():

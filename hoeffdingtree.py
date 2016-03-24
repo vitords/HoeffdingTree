@@ -37,8 +37,8 @@ class HoeffdingTree(object):
 
         # Leaf prediction strategy stuff goes here
 
-        # Only related to naive bayes, probably not useful right now
-        self._nb_threshold = 0
+        # Only used when the leaf prediction strategy is baded on Naive Bayes, not useful right now
+        #self._nb_threshold = 0
 
         self._active_leaf_count = 0
         self._inactive_leaf_count = 0
