@@ -269,13 +269,3 @@ class HoeffdingTree(object):
         """
         # Leaf strategy should be handled here if/when the Naive Bayes approach is implemented
         return ActiveHNode()
-
-    def graph(self):
-        if self._root is None:
-            raise ValueError('Tree does not have a root. No model built yet.')
-        self._root.install_node_nums(0)
-        buff = ['']
-        buff[0] += 'digraph HoeffdingTree {\n'
-        self._root.graph_tree(buff)
-        buff += '}\n'
-        return buff[0]
