@@ -65,12 +65,12 @@ def open_dataset(filename, class_index, probe_instances=100):
 
 def main():
     filename = 'dataset_file.csv'
-    dataset = open_dataset(filename, 1, 500)
+    dataset = open_dataset(filename, 1, probe_instances=10000)
     vfdt = HoeffdingTree()
     
     # Set some of the algorithm parameters
     vfdt.set_grace_period(50)
-    vfdt.set_set_hoeffding_tie_threshold(0.05)
+    vfdt.set_hoeffding_tie_threshold(0.05)
     vfdt.set_split_confidence(0.0001)
     # Split criterion, for now, can only be set on hoeffdingtree.py file.
     # This is only relevant when Information Gain is chosen as the split criterion
