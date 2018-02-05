@@ -63,6 +63,8 @@ class Attribute(object):
 			int: -1 if attribute is Numeric.
 		"""
 		if self.__att_type is 'Nominal':
+			if value not in self.__values : 
+				self.add_value(value)	    
 			return self.__values.index(value)
 		else:
 			return -1
