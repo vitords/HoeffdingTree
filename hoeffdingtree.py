@@ -2,6 +2,7 @@ import math
 from operator import attrgetter
 
 from core import utils
+from core.attribute import Attribute
 from core.instance import Instance
 from core.dataset import Dataset
 
