@@ -1,5 +1,4 @@
 from ht.conditionalsufficientstats import ConditionalSufficientStats
-from ht.weightmass import WeightMass
 from ht.univariatenumericbinarysplit import UnivariateNumericBinarySplit
 from ht.splitcandidate import SplitCandidate
 
@@ -127,27 +126,27 @@ class GaussianConditionalSufficientStats(ConditionalSufficientStats):
                 if split_val < self._min_val_observed_per_class[class_val]:
                     mass = rhs_dist.get(class_val, None)
                     if mass is None:
-                        mass = WeightMass()
+                        mass = 0.0
                         rhs_dist[class_val] = mass
-                    mass.weight += att_estimator.get_sum_of_weights()
+                    mass += att_estimator.get_sum_of_weights()
                 elif split_val > self._max_val_observed_per_class[class_val]:
                     mass = lhs_dist.get(class_val, None)
                     if mass is None:
-                        mass = WeightMass()
+                        mass = 0.0
                         lhs_dist[class_val] = mass
-                    mass.weight += att_estimator.get_sum_of_weights()
+                    mass += att_estimator.get_sum_of_weights()
                 else:
                     weights = att_estimator.weight_less_than_equal_and_greater_than(split_val)
                     mass = lhs_dist.get(class_val, None)
                     if mass is None:
-                        mass = WeightMass()
+                        mass = 0.0
                         lhs_dist[class_val] = mass
-                    mass.weight += weights[0] + weights[1]
+                    mass += weights[0] + weights[1]
                     mass = rhs_dist.get(class_val, None)
                     if mass is None:
-                        mass = WeightMass()
+                        mass = 0.0
                         rhs_dist[class_val] = mass
-                    mass.weight += weights[2]
+                    mass += weights[2]
 
         dists = [lhs_dist, rhs_dist]
         return dists

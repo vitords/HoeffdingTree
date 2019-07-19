@@ -124,7 +124,7 @@ class Instance(object):
     def num_classes(self):
         """Return the number of possible class values if class attribute is Nominal.
         If class attribute is Numeric it always returns 1.
-
+conda install -c quantopian sortedcontainers
         Returns:
             int: The number of possible class values if class attribute is Nominal.
             int: 1 if class attribute is Numeric.

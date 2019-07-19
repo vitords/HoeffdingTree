@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from ht.weightmass import WeightMass
 from core import utils
 
 class HNode(metaclass=ABCMeta):
@@ -10,7 +9,7 @@ class HNode(metaclass=ABCMeta):
     """
     def __init__(self, class_distribution=None):
         if class_distribution is None:
-            # Dict of tuples (class value, WeightMass)
+            # Dict of tuples (class value, weight mass)
             class_distribution = {}
         self.class_distribution = class_distribution
         self._leaf_num = None
@@ -36,7 +35,7 @@ class HNode(metaclass=ABCMeta):
     def class_distribution_is_pure(self):
         count = 0
         for class_value, mass in self.class_distribution.items():
-            if mass.weight > 0:
+            if mass > 0:
                 count += 1
                 if count > 1:
                     break
@@ -48,11 +47,10 @@ class HNode(metaclass=ABCMeta):
         class_val = instance.string_value(attribute=instance.class_attribute())
         mass = self.class_distribution.get(class_val, None)
         if mass is None:
-            mass = WeightMass()
-            mass.weight = 1.0
+            mass = 1.0
             self.class_distribution[class_val] = mass
 
-        self.class_distribution[class_val].weight += instance.weight()
+        self.class_distribution[class_val] += instance.weight()
 
     def get_distribution(self, instance, class_attribute):
         dist = [0.0 for i in range(class_attribute.num_values())]
@@ -60,7 +58,7 @@ class HNode(metaclass=ABCMeta):
         for i in range(class_attribute.num_values()):
             mass = self.class_distribution.get(class_attribute.value(i), None)
             if mass is not None:
-                dist[i] = mass.weight
+                dist[i] = mass
             else:
                 dist[i] = 1.0
 
@@ -76,8 +74,8 @@ class HNode(metaclass=ABCMeta):
         max_value = -1
         class_val = ''
         for class_value, mass in self.class_distribution.items():
-            if mass.weight > max_value:
-                max_value = mass.weight
+            if mass > max_value:
+                max_value = mass
                 class_val = class_value
         buff[0] += '{0} ({1})'.format(class_val, max_value)
         leaf_count += 1
@@ -90,7 +88,7 @@ class HNode(metaclass=ABCMeta):
     def total_weight(self):
         tw = 0.0
         for class_value, mass in self.class_distribution.items():
-            tw += mass.weight
+            tw += mass
         return tw
 
     def leaf_for_instance(self, instance, parent, parent_branch):
