@@ -1,5 +1,4 @@
 from ht.leafnode import LeafNode
-from ht.hnode import HNode
 from ht.gaussianconditionalsufficientstats import GaussianConditionalSufficientStats
 from ht.nominalconditionalsufficientstats import NominalConditionalSufficientStats
 from ht.splitcandidate import SplitCandidate
