@@ -1,6 +1,3 @@
-import math
-
-
 class Attribute(object):
 	"""A class for handling an attribute. 
 	Attribute can be either numeric or nominal and should never be changed after creation.
@@ -35,17 +32,12 @@ class Attribute(object):
 		self.att_type = att_type
 		# The index of the attribute
 		self.index = index
-		# The bounds of the attribute, if Numeric
-		self.__lower_bound = None
-		self.__upper_bound = None
 
 	def __str__(self):
-		return 'Attribute \'{0}\' ({1})\n   Index: {2}\n   Values: {3}'.format(
-			self.name, self.att_type, self.index, self.__values)
-
+		return f'Attribute \'{self.name}\' ({self.att_type})\n   Index: {self.index}\n   Values: {self.__values}'
 
 	def index_of_value(self, value):
-		"""Return the index of the first occurence of an attribute value.
+		"""Return the index of the first occurrence of an attribute value.
 
 		Note:
 			Since no values are stored in the Attribute class for Numeric attributes,
@@ -109,28 +101,3 @@ class Attribute(object):
 		"""
 		self.__values.append(value)
 
-	def set_numeric_range(self, lower_bound=-math.inf, upper_bound=math.inf):
-		"""Set the numeric range for the attribute.
-
-		Args:
-			lower_bound (float): The smallest possible value for the attribute. (default -math.inf)
-			upper_bound (float): The largest possible value for the attribute. (default math.inf)
-		"""
-		self.__lower_bound = lower_bound
-		self.__upper_bound = upper_bound
-
-	def lower_bound(self):
-		"""Return the lower numeric bound of the attribute.
-
-		Returns:
-			float: The lower numeric bound
-		"""
-		return self.__lower_bound
-
-	def upper_bound(self):
-		"""Return the upper numeric bound of the attribute.
-
-		Returns:
-			float: The upper numeric bound
-		"""
-		return self.__upper_bound
