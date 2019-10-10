@@ -8,7 +8,7 @@ class UnivariateNumericBinarySplit(Split):
         self._split_point = split_point
 
     def branch_for_instance(self, instance):
-        att = instance.dataset().attribute(name=self._split_att_names[0])
+        att = instance.dataset.attribute(name=self._split_att_names[0])
         if att is None or instance.is_missing(att.index):
             return None
         if instance.value(attribute=att) <= self._split_point:

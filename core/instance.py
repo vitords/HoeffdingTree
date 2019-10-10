@@ -27,13 +27,14 @@ class Instance(object):
         # The list of attribute values for the instance.
         self.__att_values = att_values
         # The dataset with which this instance is associated (has access to its properties and/or attributes).
-        self.__dataset = None
-        self.__weight = 1
+        self.dataset = None
+        self.weight = 1
 
     def __str__(self):
         return 'Instance\n   From dataset: {0}\n   Attribute values: {1}\n   Class: {2}'.format(
-            self.__dataset.name if self.__dataset is not None else 'This instance is not associated with a dataset.',
-             self.__att_values, 'A dataset is required to set an attribute as class.' if self.__dataset is None else self.__att_values[self.__dataset.class_index()])
+            self.dataset.name if self.dataset is not None else 'This instance is not associated with a dataset.',
+            self.__att_values,
+            'A dataset is required to set an attribute as class.' if self.dataset is None else self.__att_values[self.dataset.class_index()])
 
     def attribute(self, index):
         """Return the attribute with the given index.
@@ -45,7 +46,7 @@ class Instance(object):
             Attribute: The attribute at the given index.
         """
         #TODO: Should check if the instance is associated to a dataset.
-        return self.__dataset.attribute(index)
+        return self.dataset.attribute(index)
 
     def class_attribute(self):
         """Return the instance's class attribute. It is always its dataset's class attribute.
@@ -53,7 +54,7 @@ class Instance(object):
         Returns:
             Attribute: The class attribute of the instance.
         """
-        return self.__dataset.class_attribute()
+        return self.dataset.class_attribute()
 
     def class_index(self):
         """Return the instance's index of the class attribute.
@@ -62,7 +63,7 @@ class Instance(object):
             int: The class attribute's index of the instance.
         """
         #TODO: Should check if the instance is associated to a dataset.
-        return self.__dataset.class_index()
+        return self.dataset.class_index()
 
     def class_is_missing(self):
         """Test if the instance is missing a class.
@@ -90,14 +91,6 @@ class Instance(object):
         if self.class_index() < 0:
             raise ValueError('Class attribute is not set.')
         return self.value(index=self.class_index())
-
-    def dataset(self):
-        """Return the dataset this instance is associated with.
-
-        Returns:
-            Dataset: The dataset this instance is associated with.
-        """
-        return self.__dataset
 
     def is_missing(self, att_index):
         """Test if a value is missing.
@@ -129,7 +122,7 @@ class Instance(object):
             int: The number of possible class values if class attribute is Nominal.
             int: 1 if class attribute is Numeric.
         """
-        return self.__dataset.num_classes()
+        return self.dataset.num_classes()
 
     def num_values(self):
         """Return the number of the instance's values for its attributes.
@@ -147,15 +140,6 @@ class Instance(object):
             value (float): The value to be set as the instance's class value.
         """
         self.set_value(self.class_index(), value)
-
-    def set_dataset(self, dataset):
-        """Set the dataset to which the instance is associated.
-        The dataset will not know about this instance so any changes in the dataset affecting its instances will not account for this instance.
-
-        Args:
-            Dataset: The dataset to which the instance is associated.
-        """
-        self.__dataset = dataset
 
     def set_value(self, att_index, value):
         """Set the instance's attribute at att_index to the given value.
@@ -176,14 +160,6 @@ class Instance(object):
             value_index = att_index
         self.__att_values[value_index] = value
 
-    def set_weight(self, weight):
-        """Set the weight of the instance.
-
-        Args:
-            weight (float): The weight.
-        """
-        self.__weight = weight
-
     def string_value(self, att_index=None, attribute=None):
         """Return the value of the attribute as a string.
 
@@ -195,7 +171,7 @@ class Instance(object):
             str: The value of the attribute as a string.
         """
         if attribute is None:
-            attribute = self.__dataset.attribute(att_index)
+            attribute = self.dataset.attribute(att_index)
         if att_index is None:
             att_index = attribute.index
         if self.is_missing(att_index):
@@ -216,14 +192,6 @@ class Instance(object):
             return self.__att_values[index]
         else:
             return self.__att_values[attribute.index]
-
-    def weight(self):
-        """Return the weight of the instance.
-
-        Returns:
-            float: The weight of the instance.
-        """
-        return self.__weight
 
     def get_attributes(self):
         """Return all attributes of the instance.

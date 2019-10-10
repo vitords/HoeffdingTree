@@ -7,7 +7,7 @@ class UnivariateNominalMultiwaySplit(Split):
         self._split_att_names.append(att_name)
 
     def branch_for_instance(self, instance):
-        att = instance.dataset().attribute(name=self._split_att_names[0])
+        att = instance.dataset.attribute(name=self._split_att_names[0])
         if att is None or instance.is_missing(att.index):
             return None
         return att.value(instance.value(attribute=att))

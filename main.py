@@ -92,7 +92,7 @@ def main():
                 else:
                     inst_values[i] = float(inst_values[i])
             new_instance = Instance(att_values=inst_values)
-            new_instance.set_dataset(dataset)
+            new_instance.dataset = dataset
             vfdt.update_classifier(new_instance)
     print(vfdt)
 

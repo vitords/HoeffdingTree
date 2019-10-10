@@ -100,4 +100,3 @@ class Attribute(object):
 			value (str): The new attribute value to be added.
 		"""
 		self.__values.append(value)
-

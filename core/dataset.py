@@ -28,7 +28,7 @@ class Dataset(object):
 		# Associate all instances with the dataset.
 		if self.__instances is not None:
 			for inst in self.__instances:
-				inst.set_dataset(self)
+				inst.dataset = self
 		else:
 			# If no instances were given, set it to an empty list.
 			self.__instances = []
@@ -46,7 +46,7 @@ class Dataset(object):
 		Args:
 			instance (Instance): The instance to be added.
 		"""
-		instance.set_dataset(self)
+		instance.dataset = self
 		self.__instances.append(instance)
 
 	def attribute(self, index=None, name=None):

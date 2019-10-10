@@ -50,7 +50,7 @@ class HNode(metaclass=ABCMeta):
             mass = 1.0
             self.class_distribution[class_val] = mass
 
-        self.class_distribution[class_val] += instance.weight()
+        self.class_distribution[class_val] += instance.weight
 
     def get_distribution(self, instance, class_attribute):
         dist = [0.0 for i in range(class_attribute.num_values())]

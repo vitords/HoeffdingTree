@@ -33,7 +33,7 @@ class ActiveHNode(LeafNode):
 
                 stats.update(instance.value(attribute=a), 
                     instance.class_attribute().value(index=instance.class_value()),
-                    instance.weight())
+                    instance.weight)
 
     def get_possible_splits(self, split_metric):
         """Return a list of the possible split candidates.
