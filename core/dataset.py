@@ -20,7 +20,7 @@ class Dataset(object):
 		self.__attributes = attributes
 		# Set the indexes of the attributes in the dataset.
 		for i in range(len(self.__attributes)):
-			self.__attributes[i].set_index(i)
+			self.__attributes[i].index = i
 		# The index of the class attribute.
 		self.__class_index = class_index
 		# The set of instances of the dataset.
@@ -37,8 +37,8 @@ class Dataset(object):
 
 	def __str__(self):
 		return 'Dataset \'{0}\'\n   Attributes: {1}\n   Class attribute: {2}\n   Total instances: {3}'.format(
-			self.__name, [att.name() for att in self.__attributes], 
-			self.attribute(self.__class_index).name(), len(self.__instances))
+			self.__name, [att.name for att in self.__attributes],
+			self.attribute(self.__class_index).name, len(self.__instances))
 
 	def add(self, instance):
 		"""Add an instance to the dataset. Instances are always added to the end of the list.
@@ -64,7 +64,7 @@ class Dataset(object):
 			return self.__attributes[index]
 		else:
 			for att in self.__attributes:
-				if name == att.name():
+				if name == att.name:
 					return att
 			return None
 
@@ -111,7 +111,7 @@ class Dataset(object):
 			int: The number of class values, if class attribute is Nominal.
 			1: If the class attribute is Numeric.
 		"""
-		if self.class_attribute().type() is 'Numeric':
+		if self.class_attribute().att_type is 'Numeric':
 			return 1
 		else:
 			return self.class_attribute().num_values()
@@ -138,7 +138,7 @@ class Dataset(object):
 		Args:
 			Attribute: The attribute to be set as class.
 		"""
-		self.__class_index = attribute.index()
+		self.__class_index = attribute.index
 
 	def set_class_index(self, class_index):
 		"""Set the index of the class attribute.

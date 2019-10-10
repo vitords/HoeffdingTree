@@ -57,14 +57,14 @@ def open_dataset(filename, class_index, probe_instances=100):
     dataset = Dataset(attributes, class_index)
     for inst in instances:
         for i in range(len(headers)):
-            if attributes[i].type() == 'Nominal':
+            if attributes[i].att_type == 'Nominal':
                 inst[i] = int(attributes[i].index_of_value(str(inst[i])))
         dataset.add(Instance(att_values=inst))
     
     return dataset
 
 def main():
-    filename = 'dataset_file.csv'
+    filename = 'iris.csv'
     dataset = open_dataset(filename, 1, probe_instances=10000)
     vfdt = HoeffdingTree()
     
@@ -86,7 +86,7 @@ def main():
         for item in stream:
             inst_values = list(item)
             for i in range(len(inst_values)):
-                if dataset.attribute(index=i).type() == 'Nominal':
+                if dataset.attribute(index=i).att_type == 'Nominal':
                     inst_values[i] = int(dataset.attribute(index=i)
                         .index_of_value(str(inst_values[i])))
                 else:
