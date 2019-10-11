@@ -13,6 +13,8 @@ def normalize(floats, floats_sum=None):
     for i in range(len(floats)):
         floats[i] /= floats_sum
 
+    return floats
+
 
 def is_missing_value(val):
     return math.isnan(val)
