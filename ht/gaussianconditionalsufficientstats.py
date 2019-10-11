@@ -8,6 +8,8 @@ from core import utils
 from sortedcontainers import SortedList
 import math
 
+from scipy.stats import norm
+
 class GaussianEstimator(UnivariateNormalEstimator):
     """A Gaussian estimator for the GaussianConditionalSufficientStats class."""
     def __init__(self):
@@ -34,7 +36,7 @@ class GaussianEstimator(UnivariateNormalEstimator):
         equal_w = self.probability_density(value) * self._sum_of_weights
         less_w = None
         if std_dev > 0:
-            less_w = utils.normal_probability(
+            less_w = norm.cdf(
                 (value - self._mean) / std_dev) * self._sum_of_weights - equal_w
         elif value < self._mean:
             less_w = self._sum_of_weights - equal_w
