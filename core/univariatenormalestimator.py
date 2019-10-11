@@ -1,6 +1,8 @@
 from sys import float_info
 import math
-from core import utils
+
+from scipy.stats import norm
+
 
 class UnivariateNormalEstimator(object):
     """docstring for UnivariateNormalEstimator"""
@@ -36,14 +38,14 @@ class UnivariateNormalEstimator(object):
 
     def predict_intervals(self, conf):
         self.update_mean_and_variance()
-        val = utils.normal_inverse(1.0 - (1.0 - conf) / 2.0)
+        val = norm.ppf(1.0 - (1.0 - conf) / 2.0)
         arr = [[self._mean + val * math.sqrt(self._variance)],
             [self._mean - val * math.sqrt(self._variance)]]
         return arr
 
     def predict_quantile(self, percentage):
         self.update_mean_and_variance()
-        return self._mean + utils.normal_inverse(percentage) * math.sqrt(self._variance)
+        return self._mean + norm.ppf(percentage) * math.sqrt(self._variance)
 
     def log_density(self, value):
         self.update_mean_and_variance()
