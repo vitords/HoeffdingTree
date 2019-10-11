@@ -12,6 +12,9 @@ def normalize(floats, floats_sum=None):
     for i in range(len(floats)):
         floats[i] /= floats_sum
 
+    return floats
+
+
 def normal_probability(a):
     x = a * 7.07106781186547524401e-1
     y = 0.5
@@ -24,6 +27,7 @@ def normal_probability(a):
         if x > 0:
             y = 1.0 - y
     return y
+
 
 def error_function(x):
     T = [9.60497373987051638749E0, 
@@ -44,6 +48,7 @@ def error_function(x):
     z = x * x
     y = x * polevl(z, T, 4) / p1evl(z, U, 5)
     return y
+
 
 def error_function_complemented(a):
     P = [2.46196981473530512524E-10,
@@ -116,11 +121,13 @@ def error_function_complemented(a):
             return 0.0
     return y
 
+
 def polevl(x, coef, N):
     ans = coef[0]
     for i in range(1, N + 1):
         ans = ans * x + coef[i]
     return ans
+
 
 def p1evl(x, coef, N):
     ans = x + coef[0]
@@ -128,13 +135,16 @@ def p1evl(x, coef, N):
         ans = ans * x + coef[i]
     return ans
 
+
 def is_missing_value(val):
     return math.isnan(val)
+
 
 def eq(a, b):
     # Small deviation allowed in comparisons
     allowed_deviation = 1e-6
     return a is b or ((a - b < allowed_deviation) and (b - a < allowed_deviation))
+
 
 def entropy(array):
     return_value = 0
@@ -148,11 +158,13 @@ def entropy(array):
     else:
         return (return_value + ln_func(sum_value)) / (sum_value * math.log(2))
 
+
 def ln_func(num):
     if num <= 0:
         return 0
     else:
         return num * math.log(num)
+
 
 def normal_inverse(y0):
     x = y = z = y2 = x0 = x1 = code = 0
