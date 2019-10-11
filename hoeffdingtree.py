@@ -31,11 +31,6 @@ class HoeffdingTree(object):
         #self._selected_split_metric = self.GINI_SPLIT
         #self._split_metric = GiniSplitMetric()
 
-        # Leaf prediction strategy stuff goes here
-
-        # Only used when the leaf prediction strategy is baded on Naive Bayes, not useful right now
-        #self._nb_threshold = 0
-
         self._active_leaf_count = 0
         self._inactive_leaf_count = 0
         self._decision_node_count = 0
@@ -117,7 +112,7 @@ class HoeffdingTree(object):
         if instance.class_is_missing():
             return
         if self._root is None:
-            self._root = self.new_learning_node()
+            self._root = ActiveHNode()
 
         l = self._root.leaf_for_instance(instance, None, None)
         actual_node = l.the_node
@@ -145,7 +140,6 @@ class HoeffdingTree(object):
             list[float]: The class probabilities.
         """
         class_attribute = instance.class_attribute()
-        pred = []
 
         if self._root is not None:
             l = self._root.leaf_for_instance(instance, None, None)
@@ -159,7 +153,6 @@ class HoeffdingTree(object):
             utils.normalize(pred)
 
         return pred
-
 
     def deactivate_node(self, to_deactivate, parent, parent_branch):
         """Prevent supplied node of growing.
@@ -233,10 +226,10 @@ class HoeffdingTree(object):
                     new_split = SplitNode(node.class_distribution, best.split_test)
 
                     for i in range(best.num_splits()):
-                        new_child = self.new_learning_node()
+                        new_child = ActiveHNode()
                         new_child.class_distribution = best.post_split_class_distributions[i]
                         new_child.weight_seen_at_last_split_eval = new_child.total_weight()
-                        branch_name = ''
+
                         if self._header.attribute(name=best.split_test.split_attributes()[0]).is_numeric():
                             if i is 0:
                                 branch_name = 'left'
@@ -255,13 +248,3 @@ class HoeffdingTree(object):
                         self._root = new_split
                     else:
                         parent.set_child(parent_branch, new_split)
-
-    def new_learning_node(self):
-        """Create a new learning node. Will always be an ActiveHNode while Naive Bayes
-        nodes are not implemented.
-
-        Returns:
-            ActiveHNode: The new learning node.
-        """
-        # Leaf strategy should be handled here if/when the Naive Bayes approach is implemented
-        return ActiveHNode()
