@@ -1,8 +1,8 @@
 from ht.leafnode import LeafNode
-from ht.hnode import HNode
 from ht.gaussianconditionalsufficientstats import GaussianConditionalSufficientStats
 from ht.nominalconditionalsufficientstats import NominalConditionalSufficientStats
 from ht.splitcandidate import SplitCandidate
+
 
 class ActiveHNode(LeafNode):
     """A Hoeffding Tree node that supports growth."""
@@ -24,17 +24,17 @@ class ActiveHNode(LeafNode):
         for i in range(instance.num_attributes()):
             a = instance.attribute(i)
             if i is not instance.class_index():
-                stats = self._node_stats.get(a.name(), None)
+                stats = self._node_stats.get(a.name, None)
                 if stats is None:
                     if a.is_numeric():
                         stats = GaussianConditionalSufficientStats()
                     else:
                         stats = NominalConditionalSufficientStats()
-                    self._node_stats[a.name()] = stats
+                    self._node_stats[a.name] = stats
 
                 stats.update(instance.value(attribute=a), 
-                    instance.class_attribute().value(index=instance.class_value()),
-                    instance.weight())
+                             instance.class_attribute().value(index=instance.class_value()),
+                             instance.weight)
 
     def get_possible_splits(self, split_metric):
         """Return a list of the possible split candidates.

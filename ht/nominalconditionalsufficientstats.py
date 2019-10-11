@@ -1,5 +1,4 @@
 from ht.conditionalsufficientstats import ConditionalSufficientStats
-from ht.weightmass import WeightMass
 from ht.splitcandidate import SplitCandidate
 from ht.univariatenominalmultiwaysplit import UnivariateNominalMultiwaySplit
 from core import utils
@@ -13,23 +12,22 @@ class ValueDistribution(object):
     def add(self, val, weight):
         count = self._dist.get(val, None)
         if count is None:
-            count = WeightMass()
-            count.weight = 1.0
+            count = 1.0
             self.__sum += 1.0
             self._dist[val] = count
-        count.weight += weight
+        count += weight
         self.__sum += weight
 
     def delete(self, val, weight):
         count = self._dist.get(val, None)
         if count is not None:
-            count.weight -= weight
+            count -= weight
             self.__sum -= weight
 
     def get_weight(self, val):
         count = self._dist.get(val, None)
         if count is not None:
-            return count.weight
+            return count
         return 0.0
 
     def sum(self):
@@ -72,9 +70,9 @@ class NominalConditionalSufficientStats(ConditionalSufficientStats):
 
                 cls_count = cls_dist.get(class_val, None)
                 if cls_count is None:
-                    cls_count = WeightMass()
+                    cls_count = 0.0
                     cls_dist[class_val] = cls_count
-                cls_count.weight += att_count.weight
+                cls_count += att_count
 
         result = []
         for att_index, dist in split_dists.items():
