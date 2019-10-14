@@ -64,7 +64,7 @@ class HNode(metaclass=ABCMeta):
             else:
                 dist[i] = 1.0
 
-        utils.normalize(dist)
+        dist = utils.normalize(dist)
         return dist
 
     def install_node_nums(self, node_num):

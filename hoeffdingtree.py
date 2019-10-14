@@ -160,7 +160,7 @@ class HoeffdingTree(object):
         else:
             # All class values equally likely
             pred = [1 for i in range(class_attribute.num_values())]
-            utils.normalize(pred)
+            pred = utils.normalize(pred)
 
         return pred
 
