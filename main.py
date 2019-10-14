@@ -1,5 +1,7 @@
 import csv
 from hoeffdingtree import *
+from core.attribute import Attribute
+
 
 def open_dataset(filename, class_index, probe_instances=100):
     """ Open and initialize a dataset in CSV format.

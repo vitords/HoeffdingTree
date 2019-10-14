@@ -1,21 +1,6 @@
 import math
 
 
-def normalize(floats, floats_sum=None):
-    if floats_sum is None:
-        floats_sum = 0.0
-        for i in range(len(floats)):
-            floats_sum += floats[i]
-    if math.isnan(floats_sum):
-        raise ValueError("Can't normalize list. Sum is NaN.")
-    if floats_sum is 0:
-        raise ValueError("Can't normalize list. Sum is zero.")
-    for i in range(len(floats)):
-        floats[i] /= floats_sum
-
-    return floats
-
-
 def is_missing_value(val):
     return math.isnan(val)
 

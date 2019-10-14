@@ -2,7 +2,6 @@ import math
 from operator import attrgetter
 
 from core import utils
-from core.attribute import Attribute
 from core.instance import Instance
 from core.dataset import Dataset
 
@@ -11,6 +10,9 @@ from ht.ginisplitmetric import GiniSplitMetric
 from ht.inactivehnode import InactiveHNode
 from ht.infogainsplitmetric import InfoGainSplitMetric
 from ht.splitnode import SplitNode
+
+from sklearn.preprocessing import normalize
+
 
 class HoeffdingTree(object):
     """Main class for a Hoeffding Tree, also known as Very Fast Decision Tree (VFDT)."""
@@ -149,8 +151,9 @@ class HoeffdingTree(object):
             pred = actual_node.get_distribution(instance, class_attribute)
         else:
             # All class values equally likely
-            pred = [1 for i in range(class_attribute.num_values())]
-            utils.normalize(pred)
+            pred = [1] * class_attribute.num_values()
+            pred = normalize([pred], axis=1, norm='l1')
+            pred = pred.ravel().tolist()
 
         return pred
 

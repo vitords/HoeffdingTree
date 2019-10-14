@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from core import utils
+from sklearn.preprocessing import normalize
+
 
 class HNode(metaclass=ABCMeta):
     """Base for the Hoeffding Tree nodes.
@@ -53,7 +54,7 @@ class HNode(metaclass=ABCMeta):
         self.class_distribution[class_val] += instance.weight
 
     def get_distribution(self, instance, class_attribute):
-        dist = [0.0 for i in range(class_attribute.num_values())]
+        dist = [0.0] * class_attribute.num_values()
 
         for i in range(class_attribute.num_values()):
             mass = self.class_distribution.get(class_attribute.value(i), None)
@@ -62,7 +63,9 @@ class HNode(metaclass=ABCMeta):
             else:
                 dist[i] = 1.0
 
-        utils.normalize(dist)
+        dist = normalize([dist], axis=1, norm='l1')
+        dist = dist.ravel().tolist()
+
         return dist
 
     def install_node_nums(self, node_num):
