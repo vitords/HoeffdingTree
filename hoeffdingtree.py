@@ -1,10 +1,6 @@
 import math
 from operator import attrgetter
 
-from core import utils
-from core.instance import Instance
-from core.dataset import Dataset
-
 from ht.activehnode import ActiveHNode
 from ht.ginisplitmetric import GiniSplitMetric
 from ht.inactivehnode import InactiveHNode

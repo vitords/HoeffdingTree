@@ -1,6 +1,9 @@
 import csv
-from hoeffdingtree import *
+
+from hoeffdingtree import HoeffdingTree
 from core.attribute import Attribute
+from core.instance import Instance
+from core.dataset import Dataset
 
 
 def open_dataset(filename, class_index, probe_instances=100):
@@ -65,6 +68,7 @@ def open_dataset(filename, class_index, probe_instances=100):
     
     return dataset
 
+
 def main():
     filename = 'iris.csv'
     dataset = open_dataset(filename, 1, probe_instances=10000)
@@ -97,6 +101,7 @@ def main():
             new_instance.dataset = dataset
             vfdt.update_classifier(new_instance)
     print(vfdt)
+
 
 if __name__ == '__main__':
     main()
