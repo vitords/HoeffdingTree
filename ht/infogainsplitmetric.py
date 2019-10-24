@@ -1,6 +1,8 @@
 from ht.splitmetric import SplitMetric
-from core import utils
 import math
+
+from scipy.stats import entropy
+
 
 class InfoGainSplitMetric(SplitMetric):
     """The Info Gain split metric."""
@@ -11,7 +13,7 @@ class InfoGainSplitMetric(SplitMetric):
         pre = []
         for class_value, mass in pre_dist.items():
             pre.append(pre_dist[class_value].weight)
-        pre_entropy = utils.entropy(pre)
+        pre_entropy = entropy(pre, base=2)
 
         dist_weights = []
         total_weight = 0.0
@@ -33,7 +35,7 @@ class InfoGainSplitMetric(SplitMetric):
             post = []
             for class_value, mass in d.items():
                 post.append(mass.weight)
-            post_entropy += dist_weights[i] * utils.entropy(post)
+            post_entropy += dist_weights[i] * entropy(post, base=2)
 
         if total_weight > 0:
             post_entropy /= total_weight
