@@ -1,13 +1,13 @@
 import math
 from operator import attrgetter
 
+from sklearn.preprocessing import normalize
+
 from ht.activehnode import ActiveHNode
 from ht.ginisplitmetric import GiniSplitMetric
 from ht.inactivehnode import InactiveHNode
 from ht.infogainsplitmetric import InfoGainSplitMetric
 from ht.splitnode import SplitNode
-
-from sklearn.preprocessing import normalize
 
 
 class HoeffdingTree(object):
