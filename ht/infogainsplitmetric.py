@@ -1,7 +1,7 @@
-from ht.splitmetric import SplitMetric
 import math
-
 from scipy.stats import entropy
+
+from ht.splitmetric import SplitMetric
 
 
 class InfoGainSplitMetric(SplitMetric):

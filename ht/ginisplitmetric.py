@@ -1,5 +1,6 @@
 from ht.splitmetric import SplitMetric
 
+
 class GiniSplitMetric(SplitMetric):
     """The Gini split metric."""
     def evaluate_split(self, pre_dist, post_dist):

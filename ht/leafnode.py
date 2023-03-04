@@ -1,5 +1,6 @@
 from ht.hnode import HNode
 
+
 class LeafNode(HNode):
     """A Hoeffding Tree leaf node."""
     def __init__(self, node=None, parent_node=None, parent_branch=None):

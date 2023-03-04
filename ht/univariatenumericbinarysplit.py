@@ -1,5 +1,6 @@
 from ht.split import Split
 
+
 class UnivariateNumericBinarySplit(Split):
     """Binary split based on a numeric attribute."""
     def __init__(self, att_name, split_point):

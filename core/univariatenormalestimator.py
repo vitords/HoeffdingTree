@@ -1,6 +1,5 @@
 from sys import float_info
 import math
-
 from scipy.stats import norm
 
 

@@ -1,6 +1,7 @@
 from ht.hnode import HNode
 from ht.leafnode import LeafNode
 
+
 class SplitNode(HNode):
     """A Hoeffding Tree node used for splits."""
     def __init__(self, class_distrib, split):

@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class ConditionalSufficientStats(metaclass=ABCMeta):
     """A class for keeping record of the sufficient statistics for an attribute."""
     def __init__(self):

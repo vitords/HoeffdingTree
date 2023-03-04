@@ -3,6 +3,7 @@ from ht.splitcandidate import SplitCandidate
 from ht.univariatenominalmultiwaysplit import UnivariateNominalMultiwaySplit
 from core import utils
 
+
 class ValueDistribution(object):
     """Discrete distribution for the NominalConditionalSufficientStats class."""
     def __init__(self):
@@ -33,6 +34,7 @@ class ValueDistribution(object):
     def sum(self):
         return self.__sum
         
+
 class NominalConditionalSufficientStats(ConditionalSufficientStats):
     """A class for keeping record of the sufficient statistics for a nominal attribute."""
     def __init__(self):
@@ -41,7 +43,7 @@ class NominalConditionalSufficientStats(ConditionalSufficientStats):
         self._missing_weight = 0
 
     def update(self, att_val, class_val, weight):
-        if utils.is_missing_value(att_val):
+        if math.isnan(att_val):
             self._missing_weight += weight
         else:
             val_dist = self._class_lookup.get(class_val, None)

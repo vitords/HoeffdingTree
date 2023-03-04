@@ -1,5 +1,6 @@
 from ht.split import Split
 
+
 class UnivariateNominalMultiwaySplit(Split):
     """Multiway split based on a nominal attribute."""
     def __init__(self, att_name):

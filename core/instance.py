@@ -1,5 +1,6 @@
-from core.attribute import Attribute
 import math
+from core.attribute import Attribute
+
 
 class Instance(object):
     """A class for handling an instance. 

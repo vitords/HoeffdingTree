@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class SplitMetric(metaclass=ABCMeta):
     """Base for Info Gain and Gini split metrics."""
     def sum(self, dist):

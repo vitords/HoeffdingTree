@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class Split(metaclass=ABCMeta):
     """Base for classes that handle splitting (UnivariateNominaMultiwaySplit 
     and UnivariateNumericBinarySplit)."""

@@ -1,14 +1,13 @@
+from sortedcontainers import SortedList
+import math
+from scipy.stats import norm
+
 from ht.conditionalsufficientstats import ConditionalSufficientStats
 from ht.univariatenumericbinarysplit import UnivariateNumericBinarySplit
 from ht.splitcandidate import SplitCandidate
 
 from core.univariatenormalestimator import UnivariateNormalEstimator
-from core import utils
 
-from sortedcontainers import SortedList
-import math
-
-from scipy.stats import norm
 
 class GaussianEstimator(UnivariateNormalEstimator):
     """A Gaussian estimator for the GaussianConditionalSufficientStats class."""
@@ -67,7 +66,7 @@ class GaussianConditionalSufficientStats(ConditionalSufficientStats):
             class_val (str): The value of the class.
             weight (float): The weight of this observation.
         """
-        if not utils.is_missing_value(att_val):
+        if not math.isnan(att_val):
             norm = self._class_lookup.get(class_val, None)
             if norm is None:
                 norm = GaussianEstimator()
